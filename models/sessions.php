@@ -3,8 +3,8 @@ session_start();
 
 $PROJECT_ROOT = dirname(__DIR__) . '/'; //Pour l'accès relatif
 
-include_once($PROJECT_ROOT . 'models/users.php');
-//include_once($PROJECT_ROOT . "models/soiree.php");
+include_once($PROJECT_ROOT . 'models/tUsers.php');
+include_once($PROJECT_ROOT . "models/database.php");
 
 /**
  *  * Retourne vrai si l'id associé au mot de passe entrés en paramètre existe dans la BDD

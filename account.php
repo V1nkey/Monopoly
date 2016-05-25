@@ -12,10 +12,8 @@ if(!isLogged())
 }
 
 $user = getInfosUsersById($_SESSION['auth']->id);
+$cards = getCardsByUserId($user->id);
+$page_title = "Mon Compte";
 
-$page_title = "Accueil du site";
-$nbConnected = getNbConnected();
-$nbCards = getNbCardsGeneral();
-
-include_once("views/index.php");
+include_once("views/account.php");
                                                                                                                                                                                                                                                                                                                                      

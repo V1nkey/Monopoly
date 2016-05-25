@@ -56,7 +56,13 @@
 		            <label class="checkbox"> <span class="pull-right"> </span>
 		            </label>
 		            <button class="btn btn-theme btn-block" href="validateRegister.php" type="submit"><i class="fa fa-lock"></i> Inscription !</button>		
-		        </div>
+		              <hr>
+                    <div class="registration">
+                        <a class="" href="login.php">
+                            Retour à la page de Connexion
+                        </a>
+                    </div>
+                </div>
 		      </form>	  	
 	  	</div>
 	  </div>

@@ -6,7 +6,7 @@
 	{
 		global $db;
 
-		$req = $db->prepare("SELECT id, lastname, firstname, email, password, admin FROM users WHERE id = ?");
+		$req = $db->prepare("SELECT * FROM users WHERE id = ?");
 		$req->execute(array($id));
 		$data = $req->fetch(PDO::FETCH_OBJ);
 		return($data);	
@@ -15,7 +15,7 @@
 	{
 		global $db;
 
-		$req = $db->prepare("SELECT id, lastname, firstname, email, password, admin FROM users WHERE email = ?");
+		$req = $db->prepare("SELECT * FROM users WHERE email = ?");
 		$req->execute(array($email));
 		$data = $req->fetch(PDO::FETCH_OBJ);
 		return($data);	
@@ -36,8 +36,8 @@
 		global $db;
 		
 		$pwd = sha1($pwd);
-		$req = $db->prepare("INSERT INTO users (email, password, lastname, firstname) VALUES (?,?,?,?)");
-		$req->execute( [ $email, $pwd, $lastname, $firstname ] );
+		$req = $db->prepare("INSERT INTO users (email, password, lastname, firstname, registered_at) VALUES (?,?,?,?,?)");
+		$req->execute( [ $email, $pwd, $lastname, $firstname, time() ] );
 	}
 
 	function isAdmin($id)

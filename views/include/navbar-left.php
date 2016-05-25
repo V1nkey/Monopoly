@@ -13,29 +13,29 @@
             </li>
 
             <li>
-                <a href="profil.php">
+                <a href="account.php">
                     <i class="fa fa-user"></i>
-                    <span>Mon profil</span>
+                    <span>Mon Compte</span>
                 </a>
             </li>
 
             <li>
-                <a href="historiqueSoiree.php">
-                    <i class="fa fa-bars"></i>
-                    <span>Historique des soirées</span>
+                <a href="propose.php">
+                    <i class="fa fa-plus"></i>
+                    <span>Proposer</span>
                 </a>
             </li>
 
             <li>
-                <a href="view/map.php">
-                    <i class="fa fa-map-marker"></i>
-                    <span>Map</span>
+                <a href="search.php">
+                    <i class="fa fa-search"></i>
+                    <span>Rechercher</span>
                 </a>
             </li>
 
             <?php if( isAdmin($user->id) ) : ?>
             <li>
-                <a href="panel.php">
+                <a href="admin.php">
                     <i class="fa fa-dashboard"></i>
                     <span>Panneau d'administration</span>
                 </a>

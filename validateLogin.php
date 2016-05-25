@@ -1,7 +1,7 @@
 <?php
 // Includes divers
 include_once("models/sessions.php");
-include_once("models/users.php");
+include_once("models/tUsers.php");
 
 // Si l'email n'a pas été envoyée, ou si l'email n'existe pas, ou si l'email est invalide on renvoie le code d'erreur 1
 if( !isset( $_POST['email'] ) or !isExistingEmail( $_POST['email'] ) or !filter_var( filter_var( $_POST['email'], FILTER_SANITIZE_EMAIL) , FILTER_VALIDATE_EMAIL) )

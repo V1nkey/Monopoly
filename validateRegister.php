@@ -1,6 +1,6 @@
 <?php
 	include_once("models/sessions.php");
-	include_once("models/users.php");
+	include_once("models/tUsers.php");
 
 	if( empty($_POST['password']) or empty($_POST['password_confirm']) or empty($_POST['email']) or empty($_POST['lastname']) or empty($_POST['firstname']) )
 		Header('Location: register.php?err=1');
