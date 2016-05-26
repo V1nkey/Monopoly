@@ -20,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="views/assets/css/style.css" rel="stylesheet">
     <link href="views/assets/css/style-responsive.css" rel="stylesheet">
+    <link href="views/assets/css/app.css" rel="stylesheet">
 
     <script src="views/assets/js/chart-master/Chart.js"></script>
     

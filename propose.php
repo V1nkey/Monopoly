@@ -2,7 +2,6 @@
 include_once("models/sessions.php");
 include_once("models/tConnected.php");
 include_once("models/tCards.php");
-include_once("models/tCardTypes.php");
 
 updateConnected();
 
@@ -13,9 +12,8 @@ if(!isLogged())
 }
 
 $user = getInfosUsersById($_SESSION['auth']->id);
-$cards = getCardsByUserId($user->id);
-$cardTypes = getAllCardTypes();
-$page_title = "Mon Compte";
+$cards = getCardsByUserId($_SESSION['auth']->id);
+$page_title = "Proposer une ou plusieurs cartes";
 
-include_once("views/account.php");
+include_once("views/propose.php");
                                                                                                                                                                                                                                                                                                                                      

@@ -2,7 +2,6 @@
 HEADER
 *********************************************************************************************************************************************************** -->
 <?php include_once('include/header.php'); ?>
-
 <!-- **********************************************************************************************************************************************************
 TOP BAR
 *********************************************************************************************************************************************************** -->
@@ -12,7 +11,6 @@ TOP BAR
 SIDEBAR LEFT
 *********************************************************************************************************************************************************** -->
 <?php include_once('include/navbar-left.php'); ?>
-
 <!-- **********************************************************************************************************************************************************
 MAIN CONTENT
 *********************************************************************************************************************************************************** -->
@@ -56,99 +54,81 @@ MAIN CONTENT
     </div><!-- row mt -->
 
     <div class="row mt">
-      <div class="col-md-12">
-        <div class="content-panel">
-            <table class="table table-striped table-advance table-hover">
-              <h4><i class="fa fa-angle-right"></i> Carte(s) en votre possession</h4>
-              <hr>
-              <?php if( empty($cards) ) : ?>
-                <thead>
-                  <tr>
-                    <td><i class="fa fa-warning"></i> Vous n'avez aucune carte pour le moment.</td>
-                  <tr>
-                </thead>
-              <?php endif; ?>
-              <!--<thead>
-                <tr>
-                    <th><i class="fa fa-bullhorn"></i> Company</th>
-                    <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                    <th><i class="fa fa-bookmark"></i> Profit</th>
-                    <th><i class=" fa fa-edit"></i> Status</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><a href="basic_table.html#">Company Ltd</a></td>
-                    <td class="hidden-phone">Lorem Ipsum dolor</td>
-                    <td>12000.00$ </td>
-                    <td><span class="label label-info label-mini">Due</span></td>
-                    <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="basic_table.html#">
-                            Dashgum co
-                        </a>
-                    </td>
-                    <td class="hidden-phone">Lorem Ipsum dolor</td>
-                    <td>17900.00$ </td>
-                    <td><span class="label label-warning label-mini">Due</span></td>
-                    <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="basic_table.html#">
-                            Another Co
-                        </a>
-                    </td>
-                    <td class="hidden-phone">Lorem Ipsum dolor</td>
-                    <td>14400.00$ </td>
-                    <td><span class="label label-success label-mini">Paid</span></td>
-                    <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="basic_table.html#">
-                            Dashgum ext
-                        </a>
-                    </td>
-                    <td class="hidden-phone">Lorem Ipsum dolor</td>
-                    <td>22000.50$ </td>
-                    <td><span class="label label-success label-mini">Paid</span></td>
-                    <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a href="basic_table.html#">Total Ltd</a></td>
-                    <td class="hidden-phone">Lorem Ipsum dolor</td>
-                    <td>12120.00$ </td>
-                    <td><span class="label label-warning label-mini">Due</span></td>
-                    <td>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                    </td>
-                </tr>
-                </tbody>-->
-            </table>
-        </div><!-- /content-panel -->
-    </div><!-- /col-md-12 -->
+        <div class="col-md-12">
+            <div class="showback">
+                <table class="table table-striped table-advance table-hover">
+                    <h4><i class="fa fa-angle-right"></i> Carte(s) en votre possession</h4>
+                    <?php 
+                    if( isset($_GET['err']) ) :
+                        switch($_GET['err']) :
+                            case '0' : 
+                                $message = "<b> Bien joué !</b> Carte ajoutée avec succès."; 
+                                break; 
+                            case '1' : 
+                                $message = "<b> Erreur !</b> Type de carte invalide."; 
+                                break; 
+                            case '2' : 
+                                $message = "<b> Erreur !</b> Reconnectez-vous pour résoudre le problème."; 
+                                break; 
+                        endswitch; 
+
+                        if( $_GET['err'] > 0 ) :
+                            echo '<div class="alert alert-error">'.$message.'</div>';
+                        else :
+                            echo '<div class="alert alert-success">'.$message.'</div>';
+                        endif;
+                    endif;
+                    ?>
+                    
+                    <form class="form-horizontal style-form" method="post" action="addCardToUser.php">
+                        <div class="form-group ">
+                            <label class="col-sm-2 control-label">Quelle carte souhaitez-vous ajouter à votre collection ?</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="cardType">
+                                    <?php foreach( $cardTypes as $cardType ) : ?>
+                                        <option value="<?=$cardType->id?>"><?=$cardType->label?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type"submit" class="btn btn-theme04"><i class="fa fa-plus"></i> Ajouter la carte</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <br>
+                    <br>
+                    <br>
+
+                    <?php if( empty($cards) ) : ?>
+                        <thead>
+                            <tr>
+                                <td><i class="fa fa-warning"></i> Vous n'avez aucune carte pour le moment.</td>
+                            <tr>
+                        </thead>
+                    <?php else : ?>
+                        <thead>
+                            <tr>
+                                <th>ID de la carte</th>
+                                <th>Type de carte</th>
+                                <th>Couleur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach( $cards as $card ) : ?>
+                            <tr>
+                                <td><?= $card->id ?></td>
+                                <td><?= $card->label ?></td>
+                                <td>
+                                    <span class="label label-<?=$card->color?>"><i class="fa fa-circle"></i></span>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    <?php endif; ?>
+                </table>
+            </div><!-- /content-panel -->
+        </div><!-- /col-md-12 -->
     </div><!-- row mt -->
   </section> 
 </section>

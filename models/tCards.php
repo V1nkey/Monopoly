@@ -14,8 +14,15 @@ function getNbCardsGeneral() {
 function getCardsByUserId($id) {
 	global $db;
 
-	$req = $db->prepare("SELECT * FROM cards WHERE idOwner = ?");
+	$req = $db->prepare("SELECT cards.id, cardtypes.label, cardtypes.color FROM cards, cardtypes WHERE idOwner = ? AND cardTypes.id = cards.idCardType ORDER BY color, label");
 	$req->execute( [$id] );
 
 	return $req->fetchAll(PDO::FETCH_OBJ);
+}
+
+function insertCard($idUser, $idType) {
+	global $db;
+
+	$req = $db->prepare("INSERT INTO cards (idCardType, idOwner) VALUES (?,?)");
+	$req->execute( [$idType, $idUser] );
 }

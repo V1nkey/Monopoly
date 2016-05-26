@@ -5,7 +5,7 @@
   </div>
 
   <!--logo start-->
-  <a href="index.php" class="logo"><b>MONOPOLY MC DONALD</b></a>
+  <a href="index.php" class="logo"><b>MONOPOLY MC DONALDS</b></a>
   <!--logo end-->
 
   <div class="top-menu">
