@@ -1,2 +1,0 @@
-# Monopoly
-Projet Tutoré Web

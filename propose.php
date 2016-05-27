@@ -12,8 +12,15 @@ if(!isLogged())
 }
 
 $user = getInfosUsersById($_SESSION['auth']->id);
-$cards = getCardsByUserId($_SESSION['auth']->id);
+$cards = getCardsNotProposedByUserId($_SESSION['auth']->id);
 $page_title = "Proposer une ou plusieurs cartes";
 
+
+include_once("views/header.php");
+include_once("views/topbar.php");
+include_once("views/navbar-left.php");
+
 include_once("views/propose.php");
+
+include_once("views/footer.php");
                                                                                                                                                                                                                                                                                                                                      

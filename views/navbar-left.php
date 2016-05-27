@@ -19,6 +19,15 @@
                 </a>
             </li>
 
+            <?php if( isset($trades) && sizeof($trades) > 0 ) : ?>
+            <li>
+                <a href="mytrades.php">
+                    <i class="fa fa-refresh"></i>
+                    <span>Mes échanges (<?=sizeof($trades)?>)</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
             <li>
                 <a href="propose.php">
                     <i class="fa fa-plus"></i>

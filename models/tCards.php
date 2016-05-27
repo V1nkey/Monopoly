@@ -20,9 +20,44 @@ function getCardsByUserId($id) {
 	return $req->fetchAll(PDO::FETCH_OBJ);
 }
 
+function getCardsNotProposedByUserId($id) {
+	global $db;
+
+	$sql = "
+			SELECT cards.id, cardtypes.label, cardtypes.color
+			FROM cards, cardtypes
+			WHERE cards.id NOT IN ( SELECT idCard FROM cardsInTrades )
+			AND idOwner = ?
+			AND cardTypes.id = cards.idCardType
+			ORDER BY color, label
+	";
+	$req = $db->prepare($sql);
+	$req->execute( [$id] );
+
+	return $req->fetchAll(PDO::FETCH_OBJ);
+}
+
 function insertCard($idUser, $idType) {
 	global $db;
 
 	$req = $db->prepare("INSERT INTO cards (idCardType, idOwner) VALUES (?,?)");
 	$req->execute( [$idType, $idUser] );
+}
+
+function existsCard($id) {
+	global $db;
+
+	$req = $db->prepare("SELECT * FROM cards WHERE id = ?");
+	$req->execute( [$id] );
+
+	return $req->rowCount();
+}
+
+function checkCardOwner($idCard, $idOwner) {
+	global $db;
+
+	$req = $db->prepare("SELECT * FROM cards WHERE id = ? AND idOwner = ?");
+	$req->execute( [ $idCard, $idOwner ] );
+
+	return $req->rowCount();	
 }
