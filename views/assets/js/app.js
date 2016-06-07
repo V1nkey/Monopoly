@@ -53,7 +53,8 @@ $(document).ready(function(){
 				url: "ajax/createNewProposition.php",
 				data: { data: jsonString }
 			}).done( function(data) {
-				alert(data.message);
+				alert(" Proposition mise en ligne avec succès ! ");
+				document.location.href = "mytrades.php";
 			});
 		}
 	});
