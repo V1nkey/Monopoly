@@ -19,13 +19,16 @@
                 </a>
             </li>
 
-            <?php if( isset($trades) && sizeof($trades) > 0 ) : ?>
-            <li>
-                <a href="mytrades.php">
-                    <i class="fa fa-refresh"></i>
-                    <span>Mes échanges (<?=sizeof($trades)?>)</span>
-                </a>
-            </li>
+            <?php if( isset($tradesProposed) && isset($tradesInProgressProposed) && isset($tradesInProgressJoined) && isset($tradesEnded) ): ?>
+                <?php $sum = sizeof($tradesProposed) + sizeof($tradesInProgressProposed) + sizeof($tradesInProgressJoined) + sizeof($tradesEnded); ?>
+                <?php if( $sum > 0 ) : ?>
+                <li>
+                    <a href="mytrades.php">
+                        <i class="fa fa-refresh"></i>
+                        <span>Mes échanges (<?=$sum?>)</span>
+                    </a>
+                </li>
+                <?php endif; ?>
             <?php endif; ?>
 
             <li>

@@ -10,20 +10,132 @@ function insertIntoTrades($id) {
 	return $db->lastInsertId();
 }
 
-function getTradesByUserId($id) {
+function getTradesEndedByUserId($id) {
+	global $db;
+	
+	$req = $db->prepare( "	SELECT
+								trades.id as id, 
+								tradestatus.label as status, 
+								trades.dateBegin as dateBegin, 
+								trades.idSeeker as idSeeker,
+								trades.dateEnd as dateEnd, 
+								users.lastname as lastNameGiver, 
+								users.firstname as firstNameGiver
+							FROM 
+								trades, 
+								users,
+								tradestatus
+							WHERE 
+								trades.idGiver = ? 
+							AND 
+								trades.idTradeStatus IN ('3','4','5') 
+							AND 
+								trades.idTradeStatus = tradestatus.id
+							AND
+								trades.idGiver = users.id
+						" );	
+	$req->execute( [ $id ] );
+	$trades = $req->fetchAll(PDO::FETCH_OBJ);
+	
+	$index = 0;
+	foreach ($trades as $trade) {
+
+		if( !is_null( $trade->idSeeker ) ) {
+			$req = $db->prepare( "SELECT users.lastname as lastNameSeeker, users.firstname as firstNameSeeker FROM users WHERE users.id = ? ");
+			$req->execute( [ $trade->idSeeker ] );
+			$seeker = $req->fetch( PDO::FETCH_OBJ );
+
+			$trades[$index]->seeker = $seeker;
+		}
+
+		$index++;
+	}
+
+	return $trades;
+}
+
+function getTradesBySeekerIdByStatus($id, $status) {
 	global $db;
 
-	$req = $db->prepare( "SELECT * FROM trades WHERE idGiver = ? AND trades.status <> '-1' " );
-	$req->execute( [ $id ] );
-	$trades = $req->fetchAll();
-
+	$req = $db->prepare( " 	SELECT 
+								trades.id as id, 
+								trades.idTradeStatus as status, 
+								trades.dateBegin as dateBegin, 
+								trades.idSeeker as idSeeker,
+								trades.dateEnd as dateEnd, 
+								giver.lastname as lastNameGiver, 
+								giver.firstname as firstNameGiver,
+								seeker.lastname as lastNameSeeker,
+								seeker.firstname as firstNameSeeker
+							FROM
+								trades,
+								users as giver,
+								users as seeker
+							WHERE
+								trades.idSeeker = ?
+							AND
+								trades.idTradeStatus = ?
+							AND
+								trades.idGiver = giver.id
+							AND 
+								trades.idSeeker = seeker.id
+						" );
+	$req->execute( [$id, $status] );
+	$trades = $req->fetchAll(PDO::FETCH_OBJ);
+	
 	$index = 0;
 	foreach ($trades as $trade) {
 		$req = $db->prepare( "SELECT * FROM cardsintrades, cards, cardtypes WHERE cards.id = cardsintrades.idCard AND cards.idCardType = cardtypes.id AND cardsintrades.idTrade = ?");
-		$req->execute( [ $trade['id'] ] );
+		$req->execute( [ $trade->id ] );
 		$cards = $req->fetchAll( PDO::FETCH_OBJ );
 
-		$trades[$index]['cards'] = $cards;
+		$trades[$index]->cards = $cards;
+
+		$index++;
+	}
+
+	return $trades;
+}
+
+function getTradesByUserIdByStatus($id, $status) {
+	global $db;
+
+	$req = $db->prepare( "	SELECT
+								trades.id as id, 
+								trades.idTradeStatus as status, 
+								trades.dateBegin as dateBegin, 
+								trades.idSeeker as idSeeker,
+								trades.dateEnd as dateEnd, 
+								users.lastname as lastNameGiver, 
+								users.firstname as firstNameGiver
+							FROM 
+								trades, 
+								users
+							WHERE 
+								trades.idGiver = ? 
+							AND 
+								trades.idTradeStatus = ? 
+							AND
+								trades.idGiver = users.id
+						" );	
+	$req->execute( [ $id, $status ] );
+	$trades = $req->fetchAll(PDO::FETCH_OBJ);
+	
+	$index = 0;
+	foreach ($trades as $trade) {
+		$req = $db->prepare( "SELECT * FROM cardsintrades, cards, cardtypes WHERE cards.id = cardsintrades.idCard AND cards.idCardType = cardtypes.id AND cardsintrades.idTrade = ?");
+		$req->execute( [ $trade->id ] );
+		$cards = $req->fetchAll( PDO::FETCH_OBJ );
+
+		if( !is_null( $trade->idSeeker ) ) {
+			$req = $db->prepare( "SELECT users.lastname as lastNameSeeker, users.firstname as firstNameSeeker FROM users WHERE users.id = ? ");
+			$req->execute( [ $trade->idSeeker ] );
+			$seeker = $req->fetch( PDO::FETCH_OBJ );
+
+			$trades[$index]->seeker = $seeker;
+		}
+
+		$trades[$index]->cards = $cards;
 
 		$index++;
 	}
@@ -47,6 +159,13 @@ function updateTradeStatusById($id, $status) {
 	$req->execute( [ $status,$id ] );
 }
 
+function updateTradeDateEndById($id, $date) {
+	global $db;
+
+	$req = $db->prepare( " UPDATE trades SET dateEnd = ? WHERE id = ? " );
+	$req->execute( [ $date,$id ] );
+}
+
 function getTradesByCardType($idCardType) {
 	global $db;
 
@@ -66,4 +185,25 @@ function getTradesByCardType($idCardType) {
 	}
 
 	return $trades;
+}
+
+function getTradeIdGiver($idTrade) {
+	global $db;
+
+	$req = $db->prepare("SELECT * FROM trades WHERE trades.id = ?");
+	$req->execute( [$idTrade] );
+	$trade = $req->fetch( PDO::FETCH_OBJ );
+
+	if( !empty($trade) ) {
+		return $trade->idGiver;
+	} else {
+		return NULL;
+	}
+}
+
+function updateSeekerInTrade($idTrade, $idSeeker) {
+	global $db;
+
+	$req = $db->prepare("UPDATE trades SET idSeeker = ? WHERE id = ?");
+	$req->execute( [$idSeeker, $idTrade] );
 }

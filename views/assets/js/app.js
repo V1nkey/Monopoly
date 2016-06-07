@@ -172,7 +172,7 @@ $(document).ready(function(){
 		});
 	});
 
-	$('#form-search').submit( function(e, f){
+	$('#form-search').submit( function(e){
 		e.preventDefault();
 		var $this = $(this);
 		var idCardType = parseInt( $('#form-search-select').val() );
@@ -215,7 +215,7 @@ $(document).ready(function(){
 					$('table.search-show').append( newRow );	
 				});
 			} else {
-				var newRow = "<tr> <td colspan=2> Aucun utilisateur ne propose encore cette carte </td> </tr>"
+				var newRow = "<tr> <td colspan=4> Aucun utilisateur ne propose encore cette carte </td> </tr>"
 				$('table.search-show').append( newRow );	
 			}
 
@@ -262,7 +262,7 @@ $(document).ready(function(){
 			}).done( function(data) {
 				alert(" Proposition mise en ligne avec succès ! ");
 				document.location.href = "mytrades.php";
-			});*/
+			});
 		}
 	});
 });

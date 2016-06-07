@@ -14,7 +14,12 @@ if(!isLogged())
 }
 
 $user = getInfosByUserId( $_SESSION['auth']->id );
-$trades = getTradesByUserId( $_SESSION['auth']->id );
+
+$tradesProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,1 );
+$tradesInProgressProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,2 );
+$tradesInProgressJoined = getTradesBySeekerIdByStatus( $_SESSION['auth']->id, 2 );
+$tradesEnded = getTradesEndedByUserId( $_SESSION['auth']->id );
+
 $cardTypes = getAllCardTypes();
 $cards = getCardsNotProposedByUserId( $_SESSION['auth']->id );
 $page_title = "Recherche";

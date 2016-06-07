@@ -13,10 +13,13 @@ if(!isLogged())
 	exit(0);
 }
 
-$user = getInfosByUserId($_SESSION['auth']->id);
-$trades = getTradesByUserId($_SESSION['auth']->id);
+$user = getInfosByUserId( $_SESSION['auth']->id );
+$tradesProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,1 );
+$tradesInProgressProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,2 );
+$tradesInProgressJoined = getTradesBySeekerIdByStatus( $_SESSION['auth']->id, 2 );
+$tradesEnded = getTradesEndedByUserId( $_SESSION['auth']->id );
 
-$page_title = "Mes échanges en cours";
+$page_title = "Mes échanges";
 
 include_once('views/header.php');
 include_once('views/topbar.php');

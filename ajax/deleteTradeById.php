@@ -21,7 +21,10 @@ if( !is_numeric($id) || !existsTrade($id)  ) {
 		setCardStatusTo($card->id, 1);
 		deleteFromCardInTrades( $card->id, $id );
 	}
-	updateTradeStatusById($id, -1);
+	updateTradeStatusById($id, 3);
+
+	$date = new DateTime();
+	updateTradeDateEndById( $id, $date->getTimestamp() );
 }
 
 header('Content-type: application/json');
