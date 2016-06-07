@@ -15,15 +15,14 @@ if(!isLogged())
 
 $user = getInfosByUserId($_SESSION['auth']->id);
 $trades = getTradesByUserId($_SESSION['auth']->id);
-$cards = getCardsByUserId($user->id);
 $cardTypes = getAllCardTypes();
-$page_title = "Mon Compte";
+$page_title = "Recherche";
 
 include_once('views/header.php');
 include_once('views/topbar.php');
 include_once('views/navbar-left.php');
 
-include_once("views/account.php");
+include_once("views/search.php");
 
 include_once('views/footer.php');
                                                                                                                                                                                                                                                                                                                                      

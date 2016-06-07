@@ -29,3 +29,7 @@
 .label-blue {
 	background-color: #005ED9;
 }
+
+.search-result {
+	display : none ;
+}

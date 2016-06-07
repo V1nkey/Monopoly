@@ -13,7 +13,7 @@ function insertIntoTrades($id) {
 function getTradesByUserId($id) {
 	global $db;
 
-	$req = $db->prepare( "SELECT * FROM trades WHERE idGiver = ?" );
+	$req = $db->prepare( "SELECT * FROM trades WHERE idGiver = ? AND trades.status <> '-1' " );
 	$req->execute( [ $id ] );
 	$trades = $req->fetchAll();
 
@@ -31,11 +31,27 @@ function getTradesByUserId($id) {
 	return $trades;
 }
 
-function existsTrade($id) {
+function existsTrade( $id ) {
 	global $db;
 
 	$req = $db->prepare("SELECT * FROM trades WHERE id = ?");
 	$req->execute( [$id] );
 
 	return $req->rowCount();
+}
+
+function updateTradeStatusById($id, $status) {
+	global $db;
+
+	$req = $db->prepare( " UPDATE trades SET status = ? WHERE id = ? " );
+	$req->execute( [ $status,$id ] );
+}
+
+function getTradesByCardType($idCardType) {
+	global $db;
+
+	$req = $db->prepare("SELECT * FROM trades, cardsintrades, cards WHERE trades.status = 0 AND trades.id = cardsintrades.idTrade AND cardsintrades.idCard = cards.id AND cards.idCardType = ?");
+	$req->execute( [$idCardType] );
+
+	return $req->fetchAll();
 }

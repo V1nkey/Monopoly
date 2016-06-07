@@ -32,7 +32,10 @@
                                   <?= date('d/m/Y à H:i:s', $trade['dateBegin'] ) ?>
                                 </td>
                                 <td><?= sizeof($trade['cards']) ?></td>
-                                <td> <button class="btn btn-primary btn-xs btn-mytrades-show" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i></button> </td>
+                                <td> 
+                                    <button class="btn btn-primary btn-xs btn-mytrades-show" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i></button> 
+                                    <button class="btn btn-danger btn-xs btn-mytrades-delete"><i class="fa fa-ban"></i></button> 
+                                </td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

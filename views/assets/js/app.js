@@ -66,6 +66,9 @@ $(document).ready(function(){
 		var row = $this.closest('tr');
 		var id = parseInt( row.find("td.mytrades-show-id").html() );
 		
+		// Effacement de toutes les lignes du tableau
+		$("table.mytrades-show").find("tr").remove();
+
 		// Changement de l'ID dans le titre de la fenetre modale
 		$('#mytrades-show-id').html("#" + id);
 
@@ -73,11 +76,84 @@ $(document).ready(function(){
 		$.ajax({
 			type: "POST",
 			url: "ajax/getCardsInTradeById.php",
-			data: id
+			data: {data: id}
 		}).done( function(data) {
-			alert(data);
+			if( data.status == 'success' ) {
+				$( data.data ).each( function(k,v) {
+					var card = data.data[k] ;
+
+					var card_id = card.id;
+					var card_label = card.label;
+					var card_color = card.color;
+
+					var newRow = "<tr> <td>" + card_id + "</td> <td>" + card_label + "</td> <td><span class='label label-" + card_color + "'><i class='fa fa-circle'></i></span></td> </tr>";
+					$('table.mytrades-show').append( newRow );
+				});
+			} else {
+				alert( data.message );
+			}
 		}).fail( function(data) {
-			alert('test');
+			alert('Une erreur est survenue <br>');
+			console.log(data);
+		});
+	});
+
+	$('.btn-mytrades-delete').click( function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var id = parseInt( row.find("td.mytrades-show-id").html() );
+
+		// Ajout des lignes au tableau 
+		$.ajax({
+			type: "POST",
+			url: "ajax/deleteTradeById.php",
+			data: {data: id},
+			beforeSend: function() {
+				$this.find("i").removeClass("fa-ban");
+				$this.find("i").addClass("fa-refresh");
+			}
+
+		}).always( function(){
+				$this.find("i").removeClass("fa-refresh");
+				$this.find("i").addClass("fa-ban");	
+
+		}).done( function(data) {
+			if( data.status == 'success' ) {
+				row.fadeOut();
+				document.location.href = "mytrades.php";
+			} else {
+				alert( data.message );
+			}
+
+		}).fail( function(data) {
+			alert('Une erreur est survenue <br>');
+			console.log(data);
+		});
+	});
+
+	$('#form-search').submit( function(e, f){
+		e.preventDefault();
+		var $this = $(this);
+		var idCardType = parseInt( $('#form-search-select').val() );
+
+		$.ajax({
+			type: "POST",
+			url: "ajax/getProposesByIdCard.php",
+			data: {data: idCardType},
+			beforeSend: function() {
+				$this.find("i").removeClass("fa-ban");
+				$this.find("i").addClass("fa-refresh");
+			}
+
+		}).done( function(data){
+			$('#search-result-nb').html( data.data.length );
+			$('.search-result').fadeIn();
+
+		}).fail( function(data) {
+			alert('Une erreur est survenue !');
+			console.log(data);
 		});
 	});
 });
