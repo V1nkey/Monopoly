@@ -2,6 +2,7 @@
 include_once("models/sessions.php");
 include_once("models/tConnected.php");
 include_once("models/tCards.php");
+include_once("models/tCardTypes.php");
 include_once("models/tTrades.php");
 
 updateConnected();
@@ -12,22 +13,22 @@ if(!isLogged())
 	exit(0);
 }
 
-$user = getInfosByUserId($_SESSION['auth']->id);
-$cards = getCardsNotProposedByUserId($_SESSION['auth']->id);
+$user = getInfosByUserId( $_SESSION['auth']->id );
 
 $tradesProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,1 );
 $tradesInProgressProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,2 );
 $tradesInProgressJoined = getTradesBySeekerIdByStatus( $_SESSION['auth']->id, 2 );
 $tradesEnded = getTradesEndedByUserId( $_SESSION['auth']->id );
 
-$page_title = "Proposer une ou plusieurs cartes";
+$cardTypes = getAllCardTypes();
+$cards = getCardsNotProposedByUserId( $_SESSION['auth']->id );
+$page_title = "Recherche";
 
+include_once('views/header.php');
+include_once('views/topbar.php');
+include_once('views/navbar-left.php');
 
-include_once("views/header.php");
-include_once("views/topbar.php");
-include_once("views/navbar-left.php");
+include_once("views/search.php");
 
-include_once("views/propose.php");
-
-include_once("views/footer.php");
+include_once('views/footer.php');
                                                                                                                                                                                                                                                                                                                                      
