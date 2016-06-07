@@ -13,9 +13,10 @@ if(!isLogged())
 	exit(0);
 }
 
-$user = getInfosByUserId($_SESSION['auth']->id);
-$trades = getTradesByUserId($_SESSION['auth']->id);
+$user = getInfosByUserId( $_SESSION['auth']->id );
+$trades = getTradesByUserId( $_SESSION['auth']->id );
 $cardTypes = getAllCardTypes();
+$cards = getCardsNotProposedByUserId( $_SESSION['auth']->id );
 $page_title = "Recherche";
 
 include_once('views/header.php');

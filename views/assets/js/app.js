@@ -133,10 +133,52 @@ $(document).ready(function(){
 		});
 	});
 
+	$('.btn-search-show').live("click", function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var idCardType = parseInt( row.find("td.search-show-id").html() );
+
+		// Effacement de toutes les lignes du tableau
+		$("table.search-trade-show").find("tbody").remove();
+
+		// Changement de l'ID dans le titre de la fenetre modale
+		$('#search-show-id').html("#" + idCardType);
+
+		// Ajout des lignes au tableau 
+		$.ajax({
+			type: "POST",
+			url: "ajax/getCardsInTradeById.php",
+			data: {data: idCardType}
+		}).done( function(data) {
+			if( data.status == 'success' ) {
+				$( data.data ).each( function(k,v) {
+					var card = data.data[k] ;
+
+					var card_id = card.id;
+					var card_label = card.label;
+					var card_color = card.color;
+
+					var newRow = "<tr> <td>" + card_id + "</td> <td>" + card_label + "</td> <td><span class='label label-" + card_color + "'><i class='fa fa-circle'></i></span></td> </tr>";
+					$('table.search-trade-show').append( newRow );
+				});
+			} else {
+				alert( data.message );
+			}
+		}).fail( function(data) {
+			alert('Une erreur est survenue <br>');
+			console.log(data);
+		});
+	});
+
 	$('#form-search').submit( function(e, f){
 		e.preventDefault();
 		var $this = $(this);
 		var idCardType = parseInt( $('#form-search-select').val() );
+
+		// Effacement de toutes les lignes du tableau
+		$("table.search-show").find("tbody").remove();
 
 		$.ajax({
 			type: "POST",
@@ -149,6 +191,34 @@ $(document).ready(function(){
 
 		}).done( function(data){
 			$('#search-result-nb').html( data.data.length );
+			
+			if( data.data.length > 0 ) {
+				$( data.data ).each( function(k,v) {
+					var trade = data.data[k];
+					var cards = trade.cards;
+
+					var trade_id = trade.id;
+					var trade_lastname = trade.lastname;
+					var trade_firstname = trade.firstname;
+
+					if( cards.length > 1 ) {
+						var btn_show = "<td><button class='btn btn-primary btn-xs btn-search-show' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye'></i> Voir les <b>"+cards.length+"</b> cartes </button></td>";
+					}
+					else {
+						var btn_show = "<td><button class='btn btn-primary btn-xs btn-search-show' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye'></i> Voir la carte </button></td>";	
+					}
+
+					var btn_beginTrade = "<td><button class='btn btn-theme02 btn-xs btn-search-beginTrade'><i class='fa fa-exchange'></i> Commencer l'échange</button></td>";
+
+					var newRow = "<tr> <td class='search-show-id'>" + trade_id + "</td> <td>" + trade_firstname + " " + trade_lastname + "</td> " + btn_show + btn_beginTrade + " </tr>";
+
+					$('table.search-show').append( newRow );	
+				});
+			} else {
+				var newRow = "<tr> <td colspan=2> Aucun utilisateur ne propose encore cette carte </td> </tr>"
+				$('table.search-show').append( newRow );	
+			}
+
 			$('.search-result').fadeIn();
 
 		}).fail( function(data) {
@@ -156,4 +226,44 @@ $(document).ready(function(){
 			console.log(data);
 		});
 	});
+
+	$('.btn-search-beginTrade').live("click", function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var idTrade = parseInt( row.find("td.search-show-id").html() );
+
+		$('.trade-id').html('#'+idTrade);
+		$('.search-togive').fadeIn();
+	});
+
+	$('.btn-search-propose-submit').click( function(e) {
+		e.preventDefault();
+
+		var idTrade = parseInt( $(".search-show-id").html() );
+
+		if( $('table.table-yourproposition > tbody > tr').size() == 0 )
+			alert("Ajoutez des cartes à votre proposition d'abord !");
+		else {
+			var ids = [];
+			$('table.table-yourproposition > tbody > tr').each(function() {
+				$this = $(this);
+				var idCard = parseInt( $this.find("td.table-yourcollection-id").html() );
+				ids.push(idCard);
+			});
+
+			var jsonString = JSON.stringify(ids);
+
+			$.ajax({
+				type: "POST",
+				url: "ajax/beginNewTrade.php",
+				data: { data: jsonString, idTrade : idTrade }
+			}).done( function(data) {
+				alert(" Proposition mise en ligne avec succès ! ");
+				document.location.href = "mytrades.php";
+			});*/
+		}
+	});
 });
+

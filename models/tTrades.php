@@ -50,8 +50,20 @@ function updateTradeStatusById($id, $status) {
 function getTradesByCardType($idCardType) {
 	global $db;
 
-	$req = $db->prepare("SELECT * FROM trades, cardsintrades, cards WHERE trades.status = 0 AND trades.id = cardsintrades.idTrade AND cardsintrades.idCard = cards.id AND cards.idCardType = ?");
+	$req = $db->prepare("SELECT DISTINCT trades.id as id, users.firstname as firstname, users.lastname as lastname FROM trades, cardsintrades, cards, users WHERE trades.status = 0 AND trades.id = cardsintrades.idTrade AND cardsintrades.idCard = cards.id AND cards.idOwner = users.id AND cards.idCardType = ?");
 	$req->execute( [$idCardType] );
+	$trades = $req->fetchAll();
+	
+	$index = 0;
+	foreach ($trades as $trade) {
+		$req = $db->prepare( "SELECT * FROM cardsintrades, cards, cardtypes WHERE cards.id = cardsintrades.idCard AND cards.idCardType = cardtypes.id AND cardsintrades.idTrade = ?");
+		$req->execute( [ $trade['id'] ] );
+		$cards = $req->fetchAll( PDO::FETCH_OBJ );
 
-	return $req->fetchAll();
+		$trades[$index]['cards'] = $cards;
+
+		$index++;
+	}
+
+	return $trades;
 }

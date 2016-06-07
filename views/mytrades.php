@@ -15,7 +15,9 @@
                                 <td><i class="fa fa-warning"></i> Vous n'avez encore proposé aucune carte à l'échange.</td>
                             <tr>
                         </thead>
+
                     <?php else : ?>
+
                         <thead>
                             <tr>
                                 <th>ID de l'échange</th>
@@ -24,6 +26,7 @@
                                 <th></th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <?php foreach( $trades as $trade ) : ?>
                             <tr>
