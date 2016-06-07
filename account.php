@@ -25,5 +25,5 @@ include_once('views/navbar-left.php');
 
 include_once("views/account.php");
 
-include_once('views/footer.php'); ?>
+include_once('views/footer.php');
                                                                                                                                                                                                                                                                                                                                      

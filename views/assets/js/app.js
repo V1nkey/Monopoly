@@ -80,4 +80,22 @@ $(document).ready(function(){
 			alert('test');
 		});
 	});
+
+	$('.btn-admin').click( function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var id = parseInt(row.find("td.table-users-id").html());
+		var admin = ($this.attr('data') == "upgrade") ? 1 : 0;
+
+		$.ajax({
+			type: "POST",
+			url: "ajax/toggleUserStatus.php",
+			data: {id : id, admin : admin}
+		}).done (function(data) {
+			document.location.href = "admin.php#users";
+		}).fail (function(data) {
+		});
+	});
 });
