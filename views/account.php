@@ -96,16 +96,18 @@
                                 <th>ID de la carte</th>
                                 <th>Type de carte</th>
                                 <th>Couleur</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach( $cards as $card ) : ?>
                             <tr>
                                 <td><?= $card->id ?></td>
-                                <td><?= $card->label ?></td>
+                                <td><?= $card->typeLabel ?></td>
                                 <td>
                                     <span class="label label-<?=$card->color?>"><i class="fa fa-circle"></i></span>
                                 </td>
+                                <td><?= $card->statusLabel ?></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

@@ -50,11 +50,33 @@ $(document).ready(function(){
 
 			$.ajax({
 				type: "POST",
-				url: "createNewProposition.php",
+				url: "ajax/createNewProposition.php",
 				data: { data: jsonString }
 			}).done( function(data) {
 				alert(data.message);
 			});
 		}
+	});
+
+	$('.btn-mytrades-show').click( function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var id = parseInt( row.find("td.mytrades-show-id").html() );
+		
+		// Changement de l'ID dans le titre de la fenetre modale
+		$('#mytrades-show-id').html("#" + id);
+
+		// Ajout des lignes au tableau 
+		$.ajax({
+			type: "POST",
+			url: "ajax/getCardsInTradeById.php",
+			data: id
+		}).done( function(data) {
+			alert(data);
+		}).fail( function(data) {
+			alert('test');
+		});
 	});
 });

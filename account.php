@@ -13,7 +13,7 @@ if(!isLogged())
 	exit(0);
 }
 
-$user = getInfosUsersById($_SESSION['auth']->id);
+$user = getInfosByUserId($_SESSION['auth']->id);
 $trades = getTradesByUserId($_SESSION['auth']->id);
 $cards = getCardsByUserId($user->id);
 $cardTypes = getAllCardTypes();

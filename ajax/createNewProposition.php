@@ -1,10 +1,10 @@
 <?php
 // Includes divers
-include_once("models/sessions.php");
-include_once("models/tUsers.php");
-include_once("models/tCards.php");
-include_once("models/tTrades.php");
-include_once("models/tCardsInTrades.php");
+include_once("../models/sessions.php");
+include_once("../models/tUsers.php");
+include_once("../models/tCards.php");
+include_once("../models/tTrades.php");
+include_once("../models/tCardsInTrades.php");
 
 $data = json_decode(stripslashes($_POST['data']));
 
@@ -22,8 +22,12 @@ foreach( $data as $id ) {
 // Si tout va bien, on créé une nouvelle proposition
 if( $response_array['status'] == "success" ) {
 	$idTrade = insertIntoTrades( $_SESSION['auth']->id );
+	$response_array['message'] = "Proposition mise en ligne avec succès !";
 
 	foreach( $data as $id ) {
 		insertIntoCardsInTrades($id, $idTrade);
+		setCardStatusTo($id, 2);
 	}
 }
+
+echo( json_encode($response_array) );

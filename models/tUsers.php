@@ -2,7 +2,7 @@
 	include_once($PROJECT_ROOT . "models/database.php");
 
 	//infos users
-	function getInfosUsersById($id)
+	function getInfosByUserId($id)
 	{
 		global $db;
 
@@ -11,7 +11,7 @@
 		$data = $req->fetch(PDO::FETCH_OBJ);
 		return($data);	
 	}
-	function getInfosUsersByEmail($email)
+	function getInfosByUserEmail($email)
 	{
 		global $db;
 

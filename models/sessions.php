@@ -11,7 +11,7 @@ include_once($PROJECT_ROOT . "models/database.php");
  *   */
 function isValidID($n, $p)
 {	
-	if(($u = getInfosUsersById($n)) != null)
+	if(($u = getInfosByUserId($n)) != null)
 		if($u->password == $p)
 			return true;
 	return false;

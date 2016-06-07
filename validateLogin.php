@@ -9,7 +9,7 @@ if( !isset( $_POST['email'] ) or !isExistingEmail( $_POST['email'] ) or !filter_
 else
 {
 	// Sinon on vérifie le mot de passe, en fonction de celui de la base
-	$user = getInfosUsersByEmail($_POST['email']);
+	$user = getInfosByUserEmail($_POST['email']);
 		
 	if( sha1($_POST['password']) != $user->password )
 		header('Location: login.php?err=2');

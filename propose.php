@@ -2,6 +2,7 @@
 include_once("models/sessions.php");
 include_once("models/tConnected.php");
 include_once("models/tCards.php");
+include_once("models/tTrades.php");
 
 updateConnected();
 
@@ -11,8 +12,9 @@ if(!isLogged())
 	exit(0);
 }
 
-$user = getInfosUsersById($_SESSION['auth']->id);
+$user = getInfosByUserId($_SESSION['auth']->id);
 $cards = getCardsNotProposedByUserId($_SESSION['auth']->id);
+$trades = getTradesByUserId($_SESSION['auth']->id);
 $page_title = "Proposer une ou plusieurs cartes";
 
 

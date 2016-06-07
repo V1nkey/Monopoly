@@ -14,7 +14,7 @@ function getNbCardsGeneral() {
 function getCardsByUserId($id) {
 	global $db;
 
-	$req = $db->prepare("SELECT cards.id, cardtypes.label, cardtypes.color FROM cards, cardtypes WHERE idOwner = ? AND cardTypes.id = cards.idCardType ORDER BY color, label");
+	$req = $db->prepare("SELECT cards.id, cardtypes.label as typeLabel, cardtypes.color, status.label as statusLabel FROM cards, cardtypes, status WHERE idOwner = ? AND cardTypes.id = cards.idCardType AND cards.idStatus = status.idStatus ORDER BY cardtypes.color, cardtypes.label");
 	$req->execute( [$id] );
 
 	return $req->fetchAll(PDO::FETCH_OBJ);
@@ -60,4 +60,20 @@ function checkCardOwner($idCard, $idOwner) {
 	$req->execute( [ $idCard, $idOwner ] );
 
 	return $req->rowCount();	
+}
+
+function setCardStatusTo($idCard, $idStatus) {
+	global $db;
+
+	$req = $db->prepare("UPDATE cards SET idStatus = ? WHERE id = ?");
+	$req->execute( [$idStatus, $idCard] );
+}
+
+function getCardsProposedByUserId($id) {
+	global $db;
+
+	$req = $db->prepare("SELECT cards.id, cardtypes.label as typeLabel, cardtypes.color, status.label as statusLabel FROM cards, cardtypes, status WHERE cards.idOwner = ? AND cards.idStatus = ? AND cardTypes.id = cards.idCardType AND cards.idStatus = status.idStatus ORDER BY cardtypes.color, cardtypes.label");
+	$req->execute( [$id, 2] );
+
+	return $req->fetchAll(PDO::FETCH_OBJ);
 }
