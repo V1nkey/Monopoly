@@ -54,9 +54,7 @@
 		                	<?php $nbLines = maximum(sizeof($trade->givenCards), sizeof($trade->receivedCards)); ?>
 			                	<tr class="table-trades">
 			            			<td rowspan=<?= $nbLines + 1; ?>><?= $trade->givers->lastname." ".$trade->givers->firstname; ?></td>
-			            			<td>
 			            			<?php while($i <= $nbLines) : ?>
-			            				<tr>
 				            				<?php if (!empty($trade->givenCards[$i])) : ?>
 				            					<td><?= $trade->givenCards[$i]->label; ?></td>
 			            					<?php else : ?>
@@ -68,11 +66,13 @@
 			            					<?php else : ?>
 			            						<td></td>
 		            						<?php endif; ?>
-		            						<?php $i++; ?>
-	            						</tr>
+	            						<?php if ($i == 0) : ?>
+	            							<td rowspan=<?= $nbLines + 1; ?>><?= $trade->seekers->lastname." ".$trade->seekers->firstname; ?></td>
+            							<?php endif; ?>
+            							<?php $i++; ?>
+            							</tr>
+            							<tr>
             						<?php endwhile; ?>
-        							</td>
-		                    		<td rowspan=<?= $nbLines + 1; ?>><?= $trade->seekers->lastname." ".$trade->seekers->firstname; ?></td>
 	            				</tr>
 		                    <?php endforeach; ?>
 		                </tbody>
