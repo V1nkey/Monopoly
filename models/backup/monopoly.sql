@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 08 Juin 2016 à 10:05
+-- Généré le :  Mer 08 Juin 2016 à 13:07
 -- Version du serveur :  10.1.13-MariaDB
 -- Version de PHP :  5.6.21
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `monopoly`
 --
+CREATE DATABASE IF NOT EXISTS `monopoly` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `monopoly`;
 
 -- --------------------------------------------------------
 
@@ -40,12 +42,12 @@ CREATE TABLE `cards` (
 INSERT INTO `cards` (`id`, `idCardType`, `idOwner`, `idStatus`) VALUES
 (1, 3, 1, 1),
 (2, 3, 1, 1),
-(3, 6, 1, 1),
+(3, 6, 6, 1),
 (4, 1, 1, 1),
-(5, 19, 1, 1),
-(6, 22, 1, 3),
+(5, 19, 6, 1),
+(6, 22, 1, 1),
 (7, 11, 1, 1),
-(8, 18, 1, 1),
+(8, 18, 6, 1),
 (9, 3, 1, 1),
 (10, 15, 1, 1),
 (11, 14, 1, 1),
@@ -55,11 +57,13 @@ INSERT INTO `cards` (`id`, `idCardType`, `idOwner`, `idStatus`) VALUES
 (15, 9, 1, 1),
 (16, 7, 1, 1),
 (17, 12, 1, 1),
-(18, 22, 1, 3),
-(19, 22, 1, 2),
+(18, 22, 1, 1),
+(19, 22, 1, 1),
 (20, 7, 1, 1),
 (21, 8, 6, 1),
-(22, 18, 6, 3);
+(22, 18, 6, 1),
+(23, 18, 6, 1),
+(24, 8, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -77,10 +81,23 @@ CREATE TABLE `cardsintrades` (
 --
 
 INSERT INTO `cardsintrades` (`idCard`, `idTrade`) VALUES
-(6, 14),
-(18, 14),
-(22, 14),
-(19, 15);
+(6, 25),
+(12, 25),
+(13, 25),
+(18, 25),
+(19, 25),
+(5, 26),
+(6, 26),
+(8, 26),
+(18, 26),
+(19, 26),
+(23, 26),
+(6, 27),
+(8, 27),
+(18, 27),
+(19, 27),
+(22, 27),
+(23, 27);
 
 -- --------------------------------------------------------
 
@@ -158,7 +175,7 @@ CREATE TABLE `connected` (
 --
 
 INSERT INTO `connected` (`ip`, `timestamp`) VALUES
-('::1', 1465373078);
+('::1', 1465384049);
 
 -- --------------------------------------------------------
 
@@ -198,7 +215,7 @@ CREATE TABLE `replies` (
 
 CREATE TABLE `trades` (
   `id` int(11) NOT NULL,
-  `idTradeStatus` int(11) NOT NULL DEFAULT '0',
+  `idTradeStatus` int(11) NOT NULL DEFAULT '1',
   `dateBegin` int(11) NOT NULL,
   `dateEnd` int(11) DEFAULT NULL,
   `idSeeker` int(11) DEFAULT NULL,
@@ -210,11 +227,9 @@ CREATE TABLE `trades` (
 --
 
 INSERT INTO `trades` (`id`, `idTradeStatus`, `dateBegin`, `dateEnd`, `idSeeker`, `idGiver`) VALUES
-(11, 3, 1465300422, 1465334774, NULL, 1),
-(12, 3, 1465301004, 1465334774, NULL, 1),
-(13, 3, 1465301191, 1465334774, NULL, 1),
-(14, 2, 1465306822, NULL, 6, 1),
-(15, 1, 1465313032, NULL, NULL, 1);
+(25, 5, 1465379141, 1465379179, 1, 6),
+(26, 5, 1465379293, 1465379333, 1, 6),
+(27, 6, 1465380815, 1465380855, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -262,7 +277,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `registered_at`, `admin`) VALUES
 (1, 'Maxime', 'LUCAS', 'maxime.lucas96@gmail.com', '9c141468d5117247905ea6624a2689e9097f066f', 1464216005, 1),
 (5, 'Camille', 'PORTELETTE', 'camille.05@live.fr', '9c141468d5117247905ea6624a2689e9097f066f', 1464216020, 0),
-(6, 'Admin', 'ADMIN', 'admin@mail.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1465321305, 0);
+(6, 'Admin', 'ADMIN', 'admin@mail.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1465321305, 1);
 
 --
 -- Index pour les tables exportées
@@ -336,7 +351,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT pour la table `cardstatus`
 --
@@ -361,7 +376,7 @@ ALTER TABLE `replies`
 -- AUTO_INCREMENT pour la table `trades`
 --
 ALTER TABLE `trades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT pour la table `tradestatus`
 --
