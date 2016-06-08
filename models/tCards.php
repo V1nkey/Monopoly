@@ -77,3 +77,38 @@ function getCardsProposedByUserId($id) {
 
 	return $req->fetchAll(PDO::FETCH_OBJ);
 }
+
+function getMostTradedCard()
+{
+	global $db;
+
+	$query = $db->prepare("SELECT ct.label as label, count(cit.idTrade) as nbTrades 
+							FROM cards c, cardsintrades cit, cardtypes ct 
+							WHERE cit.idCard = c.id AND c.idCardType = ct.id 
+							GROUP BY c.idCardType 
+							ORDER BY nbTrades DESC 
+							LIMIT 1");
+	$query->execute([]);
+
+	return $query->fetch(PDO::FETCH_OBJ);
+}
+
+function getNbCardBiggestTrade()
+{
+	global $db;
+
+	$query = $db->prepare("SELECT COUNT(idCard) as nbCard 
+							FROM cardsintrades cit 
+							WHERE idTrade IN
+								(SELECT idTrade FROM trades WHERE idTradeStatus = 5)
+							GROUP BY idTrade
+							ORDER BY nbCard DESC
+							LIMIT 1");
+	$query->execute([]);
+	$row = $query->fetch(PDO::FETCH_OBJ);
+	if(!empty($row))
+		$nb = $row->nbCard;
+	else
+		$nb = 0;
+	return $nb;
+}

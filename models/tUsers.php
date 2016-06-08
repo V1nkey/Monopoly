@@ -65,4 +65,34 @@
 		$query = $db->prepare('UPDATE users SET admin = ? WHERE id = ?');
 		$query->execute([$value, $id]);
 	}
+
+	function getBestGiver()
+	{
+		global $db;
+
+		$query = $db->prepare("SELECT u.lastname as lastname, u.firstname as firstname, count(*) as nbCardGiven 
+								FROM users u, trades t 
+								WHERE u.id = t.idGiver AND t.idTradeStatus = 5
+								GROUP BY t.idGiver 
+								ORDER BY nbCardGiven DESC 
+								LIMIT 1");
+		$query->execute([]);
+
+		return $query->fetch(PDO::FETCH_OBJ);
+	}
+
+	function getBestSeeker()
+	{
+		global $db;
+
+		$query = $db->prepare("SELECT u.lastname as lastname, u.firstname as firstname, count(*) as nbCardGiven 
+								FROM users u, trades t 
+								WHERE u.id = t.idSeeker AND t.idTradeStatus = 5
+								GROUP BY t.idGiver 
+								ORDER BY nbCardGiven DESC 
+								LIMIT 1");
+		$query->execute([]);
+
+		return $query->fetch(PDO::FETCH_OBJ);
+	}
 ?>

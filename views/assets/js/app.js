@@ -328,9 +328,9 @@ $(document).ready(function(){
 					var card = data.data[k];
 
 					var card_id = card.id;
-					var card_label = card.label;
+					var card_label = card.typeLabel;
 					var card_color = card.color;
-					var card_status = card.status;
+					var card_status = card.statusLabel;
 
 					var newRow = "<tr> <td>" + card_id + "</td> <td>" + card_label + 
 								"</td> <td> <span class='label label-" + card_color + "'><i class='fa fa-circle'></i></span> </td> " +
@@ -343,7 +343,7 @@ $(document).ready(function(){
 				$('table.cardsByUser-show').append( newRow );	
 			}
 
-			$('.search-result').fadeIn();
+			$('.cardsByUser-result').fadeIn();
 
 		}).fail( function(data) {
 			alert('Une erreur est survenue !');

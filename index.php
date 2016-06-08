@@ -22,6 +22,10 @@ $tradesEnded = getTradesEndedByUserId( $_SESSION['auth']->id );
 $page_title = "Accueil du site";
 $nbConnected = getNbConnected();
 $nbCards = getNbCardsGeneral();
+$mostTradedCard = getMostTradedCard();
+$bestGiver = getBestGiver();
+$bestSeeker = getBestSeeker();
+$nbCardsBiggestTrade = getNbCardBiggestTrade();
 
 include_once('views/header.php');
 include_once('views/topbar.php');

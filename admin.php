@@ -13,7 +13,19 @@ if(!isLogged())
 	exit(0);
 }
 
+if(!isAdmin($_SESSION["auth"]->id))
+{
+	header('location: index.php');
+	exit(0);
+}
+
 $user = getInfosByUserId($_SESSION['auth']->id);
+
+$tradesProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,1 );
+$tradesInProgressProposed = getTradesByUserIdByStatus( $_SESSION['auth']->id,2 );
+$tradesInProgressJoined = getTradesBySeekerIdByStatus( $_SESSION['auth']->id, 2 );
+$tradesEnded = getTradesEndedByUserId( $_SESSION['auth']->id );
+
 $dataUsers = getAllUsersInfos();
 $dataUsers2 = getAllUsersInfos();
 $dataTrades = getAllTrades();

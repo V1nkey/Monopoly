@@ -30,10 +30,6 @@
 	background-color: #005ED9;
 }
 
-.search-result {
+.search-result, .cardsByUser-result, .search-togive{
 	display : none ;
-}
-
-.search-togive {
-	display: none;
 }
