@@ -14,7 +14,6 @@ if(!isLogged())
 }
 
 $user = getInfosByUserId($_SESSION['auth']->id);
-$trades = getTradesByUserId($_SESSION['auth']->id);
 $dataUsers = getAllUsersInfos();
 $dataUsers2 = getAllUsersInfos();
 $dataTrades = getAllTrades();

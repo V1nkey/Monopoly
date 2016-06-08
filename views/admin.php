@@ -69,20 +69,45 @@
 	      	<div class="col-sm-12">
 		        <div class="showback">
 		            <h4><i class="fa fa-angle-right"></i> Liste des cartes des membres : </h4>
-		            <form class="form-horizontal style-form" method="post" action=" ">
+		            <form class="form-horizontal style-form" id='form-cardsByUser' method="post" action=" ">
 		            	<div class="form-group">
 		            		<label class="col-sm-2 control-label">Liste des membres</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="idUser">
+                                <select class="form-control" id="form-cardsByUser-select" name="idUser">
                                     <?php while ($users = $dataUsers2->fetch()) : ?>
                                         <option value="<?=$users['id'];?>"><?=$users["lastname"]." ".$users["firstname"]; ?></option>
                                     <?php endwhile; ?>
                                 </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type"submit" class="btn btn-theme04"><i class="fa fa-angle-double-down"></i> Afficher les cartes</button>
                             </div>
                         <div>
                 	</form>
 		        </div> <!-- showback -->
 		    </div> <!-- col-sm-12 -->
 		</div> <!-- row mt -->
+
+		<div class="row mt cardsByUser-result">
+        <div class="col-md-12">
+            <div class="showback">
+                <table class="table table-striped table-advance table-hover cardsByUser-show">
+                    <h4><i class="fa fa-angle-right"></i> Résultat de la recherche : <b id="cardsByUser-result-nb">0</b></h4>
+
+                    <thead>
+                        <tr>
+	                        <th>ID</th>
+	                        <th>Nom de carte</th>
+	                        <th>Couleur</th>
+	                        <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+                </table>
+            </div><!-- /content-panel -->
+        </div><!-- /col-md-12 -->
+    </div><!-- row mt -->
 	</section>
 </section>
