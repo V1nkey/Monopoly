@@ -26,7 +26,7 @@ function getCardsNotProposedByUserId($id) {
 	$sql = "
 			SELECT cards.id, cardtypes.label, cardtypes.color
 			FROM cards, cardtypes
-			WHERE cards.id NOT IN ( SELECT idCard FROM cardsInTrades )
+			WHERE cards.idStatus = 1
 			AND idOwner = ?
 			AND cardTypes.id = cards.idCardType
 			ORDER BY color, label
@@ -72,7 +72,7 @@ function setCardStatusTo($idCard, $idStatus) {
 function getCardsProposedByUserId($id) {
 	global $db;
 
-	$req = $db->prepare("SELECT cards.id, cardtypes.label as typeLabel, cardtypes.color, status.label as statusLabel FROM cards, cardtypes, status WHERE cards.idOwner = ? AND cards.idStatus = ? AND cardTypes.id = cards.idCardType AND cards.idStatus = status.idStatus ORDER BY cardtypes.color, cardtypes.label");
+	$req = $db->prepare("SELECT cards.id, cardtypes.label as typeLabel, cardtypes.color, cardstatus.label as statusLabel FROM cards, cardtypes, cardstatus WHERE cards.idOwner = ? AND cards.idStatus = ? AND cardTypes.id = cards.idCardType AND cards.idStatus = cardstatus.idStatus ORDER BY cardtypes.color, cardtypes.label");
 	$req->execute( [$id, 2] );
 
 	return $req->fetchAll(PDO::FETCH_OBJ);
@@ -111,4 +111,20 @@ function getNbCardBiggestTrade()
 	else
 		$nb = 0;
 	return $nb;
+
+function setCardOwnerTo($idCard, $idOwner) {
+	global $db;
+
+	$req = $db->prepare("UPDATE cards SET idOwner = ? WHERE id = ?");
+	$req->execute( [$idOwner, $idCard] );
+}
+
+function getCardOwnerTo($idCard) {
+	global $db;
+
+	$req = $db->prepare("SELECT idOwner FROM cards WHERE id = ?");
+	$req->execute( [$idCard] );
+	$user = $req->fetch( PDO::FETCH_OBJ );
+
+	return $user->idOwner;
 }

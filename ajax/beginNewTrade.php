@@ -34,7 +34,7 @@ if( $response_array['status'] == "success" ) {
 		// - Mise à jour du statut des cartes du seeker
 		$idSeeker = $_SESSION['auth']->id;
 		updateSeekerInTrade($idTrade, $idSeeker);
-		updateTradeStatusById($idTrade, 1);
+		updateTradeStatusById($idTrade, 2);
 
 		foreach( $cardsId as $id ) {
 			insertIntoCardsInTrades($id, $idTrade);

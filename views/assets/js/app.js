@@ -297,6 +297,50 @@ $(document).ready(function(){
 			data: { idTrade : idTrade }
 		}).done( function(data) {
 			alert(data.message);
+			console.log(data);
+			document.location.href = "mytrades.php";
+		}).fail( function(data) {
+			alert("Une erreur est survenue");
+			console.log(data);
+		});
+	});
+
+	$('.btn-mytrades-deny').click( function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var idTrade = parseInt( row.find("td.mytrades-show-id").html() );
+
+		$.ajax({
+			type: "POST",
+			url: "ajax/denyTradeGiver.php",
+			data: { idTrade : idTrade }
+		}).done( function(data) {
+			alert(data.message);
+			console.log(data);	
+			document.location.href = "mytrades.php";
+		}).fail( function(data) {
+			alert("Une erreur est survenue");
+			console.log(data);
+		});
+	});
+
+	$('.btn-mytrades-accept').click( function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var idTrade = parseInt( row.find("td.mytrades-show-id").html() );
+
+		$.ajax({
+			type: "POST",
+			url: "ajax/acceptTrade.php",
+			data: { idTrade : idTrade }
+		}).done( function(data) {
+			alert(data.message);
+			console.log(data);	
+			document.location.href = "mytrades.php";
 		}).fail( function(data) {
 			alert("Une erreur est survenue");
 			console.log(data);
