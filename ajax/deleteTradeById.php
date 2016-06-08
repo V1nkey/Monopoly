@@ -19,7 +19,6 @@ if( !is_numeric($id) || !existsTrade($id)  ) {
 
 	foreach( $cards as $card ) {
 		setCardStatusTo($card->id, 1);
-		deleteFromCardInTrades( $card->id, $id );
 	}
 	updateTradeStatusById($id, 3);
 
