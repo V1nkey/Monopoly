@@ -49,15 +49,31 @@
 		                    </tr>
 		                </thead> 
 		                <tbody>
-		                	<?php foreach($dataTrades as $trades) : ?>
-	                		<?php $index = 0; ?>
+		                	<?php foreach($dataTrades as $trade) : ?>
+		                	<?php $i = 0; ?>
+		                	<?php $nbLines = maximum(sizeof($trade->givenCards), sizeof($trade->receivedCards)); ?>
 			                	<tr class="table-trades">
-			            			<td><?= $trades[$index]["givers"]["lastname"]." ".$trades[$index]["givers"]["firstname"]; ?></td>
-		            				<td><?= $trades[$index]["givenCards"]["label"]; ?></td>
-		            				<td><?= $trades[$index]["receivedCards"]["label"]; ?></td>
-		                    		<td><?= $trades[$index]["seekers"]["lastname"]." ".$trades[$index]["seekers"]["firstname"]; ?></td>
+			            			<td rowspan=<?= $nbLines + 1; ?>><?= $trade->givers->lastname." ".$trade->givers->firstname; ?></td>
+			            			<td>
+			            			<?php while($i <= $nbLines) : ?>
+			            				<tr>
+				            				<?php if (!empty($trade->givenCards[$i])) : ?>
+				            					<td><?= $trade->givenCards[$i]->label; ?></td>
+			            					<?php else : ?>
+			            						<td></td>
+		            						<?php endif; ?>
+
+				            				<?php if (!empty($trade->receivedCards[$i])) : ?>
+				            					<td><?= $trade->receivedCards[$i]->label; ?></td>
+			            					<?php else : ?>
+			            						<td></td>
+		            						<?php endif; ?>
+		            						<?php $i++; ?>
+	            						</tr>
+            						<?php endwhile; ?>
+        							</td>
+		                    		<td rowspan=<?= $nbLines + 1; ?>><?= $trade->seekers->lastname." ".$trade->seekers->firstname; ?></td>
 	            				</tr>
-            				<?php $index++; ?>
 		                    <?php endforeach; ?>
 		                </tbody>
 		            </table>

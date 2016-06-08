@@ -179,35 +179,35 @@ function getAllTrades()
 {
 	global $db;
 
-	$query = $db->query("SELECT * FROM trades WHERE idSeeker != NULL");
+	$query = $db->query("SELECT * FROM trades WHERE idSeeker IS NOT NULL AND idTradeStatus = 5");
 	$trades = $query->fetchAll(PDO::FETCH_OBJ);
-
+	
 	$index = 0;
 	foreach ($trades as $trade) 
 	{
 		$query = $db->prepare("SELECT lastname, firstname FROM users WHERE id = ?");
-		$query->execute($trade['idGiver']);
-		$givers = $query->fetchAll(PDO::FETCH_OBJ);
+		$query->execute( [$trade->idGiver] );
+		$givers = $query->fetch(PDO::FETCH_OBJ);
 
-		$trades[$index]['givers'] = $givers;
+		$trades[$index]->givers = $givers;
 
 		$query = $db->prepare("SELECT lastname, firstname FROM users WHERE id = ?");
-		$query->execute($trade['idSeeker']);
-		$seekers = $query->fetchAll(PDO::FETCH_OBJ);
+		$query->execute( [$trade->idSeeker] );
+		$seekers = $query->fetch(PDO::FETCH_OBJ);
 
-		$trades[$index]['seekers'] = $seekers;
+		$trades[$index]->seekers = $seekers;
 
 		$query = $db->prepare("SELECT ct.label FROM cards c,  cardsintrades cit, cardtypes ct WHERE cit.idTrade = ? AND cit.idCard = c.id AND c.idCardType = ct.id AND c.idOwner = ?");
-		$query->execute([ $trade['id'], $trade['idGiver']]);
+		$query->execute([ $trade->id, $trade->idSeeker]);
 		$givenCards = $query->fetchAll(PDO::FETCH_OBJ);
 
-		$trades[$index]['givenCards'] = $givenCards;		
+		$trades[$index]->givenCards = $givenCards;		
 
 		$query = $db->prepare("SELECT ct.label FROM cards c,  cardsintrades cit, cardtypes ct WHERE cit.idTrade = ? AND cit.idCard = c.id AND c.idCardType = ct.id AND c.idOwner = ?");
-		$query->execute([ $trade['id'], $trade['idSeeker']]);
+		$query->execute([ $trade->id, $trade->idGiver ]);
 		$receivedCards = $query->fetchAll(PDO::FETCH_OBJ);
 
-		$trades[$index]['receivedCards'] = $receivedCards;
+		$trades[$index]->receivedCards = $receivedCards;
 
 		$index++;
 	}
