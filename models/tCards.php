@@ -111,6 +111,7 @@ function getNbCardBiggestTrade()
 	else
 		$nb = 0;
 	return $nb;
+}
 
 function setCardOwnerTo($idCard, $idOwner) {
 	global $db;
