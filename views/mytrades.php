@@ -134,8 +134,8 @@
                                 <td><?= sizeof($trade->cards) ?></td>
                                 <td><?= $trade->firstNameGiver.' '.$trade->lastNameGiver ?></td>
                                 <td> 
-                                    <button class="btn btn-primary btn-xs btn-mytrades-show" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i></button> 
-                                    <button class="btn btn-danger btn-xs btn-mytrades-delete"><i class="fa fa-ban"></i></button> 
+                                    <button class="btn btn-primary btn-xs btn-mytrades-show" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i> Voir</button> 
+                                    <button class="btn btn-danger btn-xs btn-mytrades-quit-seeker"><i class="fa fa-ban"></i> Quitter l'échange</button> 
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -28,7 +28,7 @@ function getTradesEndedByUserId($id) {
 							WHERE 
 								trades.idGiver = ? 
 							AND 
-								trades.idTradeStatus IN ('3','4','5') 
+								trades.idTradeStatus IN ('3','4','5', '6') 
 							AND 
 								trades.idTradeStatus = tradestatus.id
 							AND

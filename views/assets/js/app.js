@@ -265,5 +265,24 @@ $(document).ready(function(){
 			});
 		}
 	});
+
+	$('.btn-mytrades-quit-seeker').click( function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var idTrade = parseInt( row.find("td.mytrades-show-id").html() );
+
+		$.ajax({
+			type: "POST",
+			url: "ajax/quitTradeSeeker.php",
+			data: { idTrade : idTrade }
+		}).done( function(data) {
+			alert(data.message);
+		}).fail( function(data) {
+			alert("Une erreur est survenue");
+			console.log(data);
+		});
+	});
 });
 
