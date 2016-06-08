@@ -83,8 +83,8 @@ function getMostTradedCard()
 	global $db;
 
 	$query = $db->prepare("SELECT ct.label as label, count(cit.idTrade) as nbTrades 
-							FROM cards c, cardsintrades cit, cardtypes ct 
-							WHERE cit.idCard = c.id AND c.idCardType = ct.id 
+							FROM cards c, cardsintrades cit, cardtypes ct, trades t 
+							WHERE cit.idCard = c.id AND c.idCardType = ct.id AND cit.idTrade = t.id AND t.idTradeStatus = 5
 							GROUP BY c.idCardType 
 							ORDER BY nbTrades DESC 
 							LIMIT 1");

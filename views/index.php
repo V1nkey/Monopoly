@@ -43,8 +43,12 @@
           <h1 class="mt"><i class="fa fa-file fa-3x"></i></h1>
           <footer>
             <div class="centered">
-              <h5><?= $mostTradedCard->label; ?></h5>
-              <h6>Echangée <?= $mostTradedCard->nbTrades; ?> fois</h6>
+              <?php if (!empty($mostTradedCard)) : ?>
+                <h5><?= $mostTradedCard->label; ?></h5>
+                <h6>Echangée <?= $mostTradedCard->nbTrades; ?> fois</h6>
+              <?php else : ?>
+                <h5>Aucune carte n'a encore été échangée</h5>
+              <?php endif; ?>
             </div>
           </footer>
         </div><!-- /darkblue panel -->
