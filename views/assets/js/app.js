@@ -172,6 +172,24 @@ $(document).ready(function(){
 		});
 	});
 
+	$('.btn-admin').click( function(e) {
+		e.preventDefault();
+
+		var $this = $(this);
+		var row = $this.closest('tr');
+		var id = parseInt(row.find("td.table-users-id").html());
+		var admin = ($this.attr('data') == "upgrade") ? 1 : 0;
+
+		$.ajax({
+			type: "POST",
+			url: "ajax/toggleUserStatus.php",
+			data: {id : id, admin : admin}
+		}).done (function(data) {
+			location.reload();
+		}).fail (function(data) {
+		});
+	});
+
 	$('#form-search').submit( function(e){
 		e.preventDefault();
 		var $this = $(this);
@@ -284,5 +302,52 @@ $(document).ready(function(){
 			console.log(data);
 		});
 	});
-});
 
+	$('#form-cardsByUser').submit( function(e){
+		e.preventDefault();
+		var $this = $(this);
+		var idUser = parseInt( $('#form-cardsByUser-select').val() );
+
+		// Effacement de toutes les lignes du tableau
+		$("table.cardsByUser-show").find("tbody").remove();
+
+		$.ajax({
+			type: "POST",
+			url: "ajax/getCardsByUser.php",
+			data: {data: idUser},
+			beforeSend: function() {
+				$this.find("i").removeClass("fa-ban");
+				$this.find("i").addClass("fa-refresh");
+			}
+
+		}).done( function(data){
+			$('#cardsByUser-result-nb').html( data.data.length );
+			
+			if( data.data.length > 0 ) {
+				$( data.data ).each( function(k,v) {
+					var card = data.data[k];
+
+					var card_id = card.id;
+					var card_label = card.label;
+					var card_color = card.color;
+					var card_status = card.status;
+
+					var newRow = "<tr> <td>" + card_id + "</td> <td>" + card_label + 
+								"</td> <td> <span class='label label-" + card_color + "'><i class='fa fa-circle'></i></span> </td> " +
+								"<td>" + card_status + "</td></tr>";
+
+					$('table.cardsByUser-show').append( newRow );	
+				});
+			} else {
+				var newRow = "<tr> <td colspan=4> Cet utilisateur ne dispose d'aucune carte </td> </tr>"
+				$('table.cardsByUser-show').append( newRow );	
+			}
+
+			$('.search-result').fadeIn();
+
+		}).fail( function(data) {
+			alert('Une erreur est survenue !');
+			console.log(data);
+		});
+	});
+});

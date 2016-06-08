@@ -49,4 +49,20 @@
 		$bool = $req->fetch(PDO::FETCH_OBJ);
 		return $bool->admin==1 ? true : false;
 	}
+
+	function getAllUsersInfos()
+	{
+		global $db;
+
+		$query = $db->query('SELECT id, lastname, firstname, admin FROM users ORDER BY lastname');
+		return $query;
+	}
+
+	function updateStatus($id, $value)
+	{
+		global $db;
+
+		$query = $db->prepare('UPDATE users SET admin = ? WHERE id = ?');
+		$query->execute([$value, $id]);
+	}
 ?>

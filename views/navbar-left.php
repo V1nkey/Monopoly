@@ -46,11 +46,28 @@
             </li>
 
             <?php if( isAdmin($user->id) ) : ?>
-            <li>
+            <li class="sub-menu">
                 <a href="admin.php">
                     <i class="fa fa-dashboard"></i>
                     <span>Panneau d'administration</span>
                 </a>
+                <ul class="sub">
+                    <li>
+                        <a href="admin.php">
+                            <span>Gestion des membres</span>
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="admin.php#trades">
+                            <span>Liste des transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin.php#cards">
+                            <span>Liste des cartes</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <?php endif; ?>
         </ul>
