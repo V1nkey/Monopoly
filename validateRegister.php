@@ -20,17 +20,19 @@
 	else if( isExistingEmail($email) ) //Le mail existe
 		Header('Location: register.php?err=4');
 
-	else if( !preg_match("#^[a-zA-Z]+[\s\-]?[a-zA-Z]+$", $lastname) //Le nom n'est pas Alpha
+	else if( !preg_match("#^[a-zA-Z]+[\s-]?[a-zA-Z]?$#", $lastname)) //Le nom n'est pas Alpha
 		Header('Location: register.php?err=5');
 
-	else if( !preg_match("##^[a-zA-Z]+[\s\-]?[a-zA-Z]+$", $firstname) //Le prenom n'est pas Alpha
+	else if( !preg_match("#^[a-zA-Z]+[\s-]?[a-zA-Z]?$#", $firstname)) //Le prenom n'est pas Alpha
 		Header('Location: register.php?err=6');
+
+	else if( !preg_match("#^[a-zA-Z0-9]+$#", $password))
+		Header('Location: register.php?err=7');
 
 	else
 	{
-		$lastname = strtoupper( $tmp2Lastname );
-		$firstname = ucfirst( strtolower($tmp2Firstname) );
-
+		$lastname = strtoupper( $lastname );
+		$firstname = ucfirst( strtolower($firstname) );
 		
 		addUser($email, $password, $lastname, $firstname);
 		
