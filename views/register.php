@@ -42,6 +42,11 @@
                             case 4 :
                                 echo '- L\'email existe déja';
                                 break;
+                            case 5 :
+                                echo '- Le nom est incorrect';
+                                break;
+                            case 6 :
+                                echo '- Le prénom est incorrect';
                         endswitch; ?>
                     </div>
                     <?php endif;?>

@@ -3,15 +3,18 @@
 include_once("models/sessions.php");
 include_once("models/tUsers.php");
 
+$email = htmlentities(mysql_real_escape_string($_POST['email']));
+$password = htmlentities(mysql_real_escape_string($_POST['password']));
+
 // Si l'email n'a pas été envoyée, ou si l'email n'existe pas, ou si l'email est invalide on renvoie le code d'erreur 1
-if( !isset( $_POST['email'] ) or !isExistingEmail( $_POST['email'] ) or !filter_var( filter_var( $_POST['email'], FILTER_SANITIZE_EMAIL) , FILTER_VALIDATE_EMAIL) )
+if( !isset( $email ) or !isExistingEmail( $email ) or !filter_var( filter_var( $email, FILTER_SANITIZE_EMAIL) , FILTER_VALIDATE_EMAIL) )
 	header('Location: login.php?err=1');
 else
 {
 	// Sinon on vérifie le mot de passe, en fonction de celui de la base
-	$user = getInfosByUserEmail($_POST['email']);
+	$user = getInfosByUserEmail($email);
 		
-	if( sha1($_POST['password']) != $user->password )
+	if( sha1($password) != $user->password )
 		header('Location: login.php?err=2');
 	else
 	{
