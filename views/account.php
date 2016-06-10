@@ -1,7 +1,7 @@
 <!--main content start-->
 <section id="main-content">
   <section class="wrapper site-min-height">
-    <h3><i class="fa fa-angle-right"></i> <?= $page_title ?></h3>
+    <h3><i class="fa fa-angle-right"></i> <?= $page_title ?> <?= $user->id?></h3>
 
     <div class="row mt">
       <div class="col-sm-12">
