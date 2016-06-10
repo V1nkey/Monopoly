@@ -42,6 +42,14 @@
                             case 4 :
                                 echo '- L\'email existe déja';
                                 break;
+                            case 5 :
+                                echo '- Le nom est incorrect';
+                                break;
+                            case 6 :
+                                echo '- Le prénom est incorrect';
+                                break;
+                            case 7 :
+                                echo '- Le mot de passe ne peut contenir que des caractères alphanumériques(A-Z et 0-9)';
                         endswitch; ?>
                     </div>
                     <?php endif;?>
