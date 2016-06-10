@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 08 Juin 2016 à 13:07
+-- Généré le :  Ven 10 Juin 2016 à 12:08
 -- Version du serveur :  10.1.13-MariaDB
 -- Version de PHP :  5.6.21
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `monopoly`
 --
-CREATE DATABASE IF NOT EXISTS `monopoly` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `monopoly`;
 
 -- --------------------------------------------------------
 
@@ -57,7 +55,7 @@ INSERT INTO `cards` (`id`, `idCardType`, `idOwner`, `idStatus`) VALUES
 (15, 9, 1, 1),
 (16, 7, 1, 1),
 (17, 12, 1, 1),
-(18, 22, 1, 1),
+(18, 22, 1, 2),
 (19, 22, 1, 1),
 (20, 7, 1, 1),
 (21, 8, 6, 1),
@@ -97,7 +95,14 @@ INSERT INTO `cardsintrades` (`idCard`, `idTrade`) VALUES
 (18, 27),
 (19, 27),
 (22, 27),
-(23, 27);
+(23, 27),
+(6, 28),
+(8, 28),
+(18, 28),
+(19, 28),
+(22, 28),
+(23, 28),
+(18, 29);
 
 -- --------------------------------------------------------
 
@@ -175,7 +180,7 @@ CREATE TABLE `connected` (
 --
 
 INSERT INTO `connected` (`ip`, `timestamp`) VALUES
-('::1', 1465384049);
+('::1', 1465469940);
 
 -- --------------------------------------------------------
 
@@ -229,7 +234,9 @@ CREATE TABLE `trades` (
 INSERT INTO `trades` (`id`, `idTradeStatus`, `dateBegin`, `dateEnd`, `idSeeker`, `idGiver`) VALUES
 (25, 5, 1465379141, 1465379179, 1, 6),
 (26, 5, 1465379293, 1465379333, 1, 6),
-(27, 6, 1465380815, 1465380855, 6, 1);
+(27, 6, 1465380815, 1465380855, 6, 1),
+(28, 4, 1465464953, 1465464999, 6, 1),
+(29, 1, 1465469938, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -356,7 +363,7 @@ ALTER TABLE `cards`
 -- AUTO_INCREMENT pour la table `cardstatus`
 --
 ALTER TABLE `cardstatus`
-  MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `cardtypes`
 --
@@ -376,7 +383,7 @@ ALTER TABLE `replies`
 -- AUTO_INCREMENT pour la table `trades`
 --
 ALTER TABLE `trades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT pour la table `tradestatus`
 --
