@@ -2,8 +2,8 @@
 $sgbdr='mysql';
 $bddHost='localhost';
 $bddBase='monopoly';
-$bddUser='root';
-$bddPassword='';
+$bddUser='monopoly';
+$bddPassword='asinfo486';
 
 try
 {

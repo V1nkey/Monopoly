@@ -3,8 +3,10 @@
 include_once("models/sessions.php");
 include_once("models/tUsers.php");
 
-$email = htmlentities(mysql_real_escape_string($_POST['email']));
-$password = htmlentities(mysql_real_escape_string($_POST['password']));
+//$email = htmlentities(mysql_real_escape_string($_POST['email']));
+//$password = htmlentities(mysql_real_escape_string($_POST['password']));
+$email = $_POST['email'];
+$password = $_POST['password'];
 
 // Si l'email n'a pas été envoyée, ou si l'email n'existe pas, ou si l'email est invalide on renvoie le code d'erreur 1
 if( !isset( $email ) or !isExistingEmail( $email ) or !filter_var( filter_var( $email, FILTER_SANITIZE_EMAIL) , FILTER_VALIDATE_EMAIL) )
