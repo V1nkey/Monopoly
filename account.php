@@ -24,10 +24,6 @@ $cards = getCardsByUserId($user->id);
 $cardTypes = getAllCardTypes();
 $page_title = "Mon Compte";
 
-echo "<pre>";
-var_dump($cards);
-echo "</pre>";
-exit(0);
 include_once('views/header.php');
 include_once('views/topbar.php');
 include_once('views/navbar-left.php');

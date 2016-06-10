@@ -14,7 +14,7 @@ function getNbCardsGeneral() {
 function getCardsByUserId($id) {
 	global $db;
 
-	$req = $db->prepare("SELECT cards.id AS id, cardtypes.label as typeLabel, cardtypes.color as color, cardstatus.label as statusLabel FROM cards, cardtypes, cardstatus WHERE idOwner = ? AND cardTypes.id = cards.idCardType AND cards.idStatus = cardstatus.idStatus ORDER BY cardtypes.color, cardtypes.label");
+	$req = $db->prepare("SELECT cards.id AS id, cardtypes.label as typeLabel, cardtypes.color as color, cardstatus.label as statusLabel FROM cards, cardtypes, cardstatus WHERE idOwner = ? AND cardtypes.id = cards.idCardType AND cards.idStatus = cardstatus.idStatus ORDER BY cardtypes.color, cardtypes.label");
 	$req->execute( [$id] );
 
 	return $req->fetchAll(PDO::FETCH_OBJ);
