@@ -28,7 +28,7 @@ function getCardsNotProposedByUserId($id) {
 			FROM cards, cardtypes
 			WHERE cards.idStatus = 1
 			AND idOwner = ?
-			AND cardTypes.id = cards.idCardType
+			AND cardtypes.id = cards.idCardType
 			ORDER BY color, label
 	";
 	$req = $db->prepare($sql);
