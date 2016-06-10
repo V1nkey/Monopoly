@@ -2,11 +2,11 @@
 	include_once("models/sessions.php");
 	include_once("models/tUsers.php");
 
-	$email = htmlentities(mysql_real_escape_string($_POST['email']));
-	$lastname = htmlentities(mysql_real_escape_string($_POST['lastname']));
-	$firstname = htmlentities(mysql_real_escape_string($_POST['firstname']));
-	$password = htmlentities(mysql_real_escape_string($_POST['password']));
-	$password_confirm = htmlentities(mysql_real_escape_string($_POST['password_confirm']));
+	$email = $_POST['email'];
+	$lastname = $_POST['lastname'];
+	$firstname = $_POST['firstname'];
+	$password = $_POST['password'];
+	$password_confirm = $_POST['password_confirm'];
 
 	if( empty($_POST['password']) or empty($_POST['password_confirm']) or empty($_POST['email']) or empty($_POST['lastname']) or empty($_POST['firstname']) )
 		Header('Location: register.php?err=1');
